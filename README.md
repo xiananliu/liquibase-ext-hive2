@@ -6,14 +6,14 @@ liquibase 的 hive2 扩展
 
 cloudera hive驱动不在中央仓库，需要自行下载 
 
-#使用步骤
+# 使用步骤
 
 
 
-##1，下载 HiveJDBC41.jar  :
+## 1，下载 HiveJDBC41.jar  :
     https://www.cloudera.com/downloads/connectors/impala/jdbc/2-6-4.html
     
-##2， 安装HiveJDBC41.jar 到 本地 maven 仓库：
+## 2， 安装HiveJDBC41.jar 到 本地 maven 仓库：
 
 | file                     | groupId                   | artifactId       | version |
 | ------------------------ | ------------------------- | ---------------- | ------- |
@@ -25,12 +25,12 @@ cloudera hive驱动不在中央仓库，需要自行下载
 ``` shell
 mvn install:install-file -Dfile=HiveJDBC41.jar -DgroupId=com.cloudera.hive.jdbc -DartifactId=HiveJDBC41 -Dversion=2.6.21 -Dpackaging=jar
 ```
-##3，clone 本项目并 install
+## 3，clone 本项目并 install
 ```shell
 mvn install
 ```
 
-##4，引入自己的项目
+## 4，引入自己的项目
 ```xml
  <dependency>
     <groupId>xiananliu</groupId>
