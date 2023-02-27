@@ -22,6 +22,7 @@
             <groupId>org.liquibase</groupId>
             <artifactId>liquibase-core</artifactId>
             <version>4.8.0</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.cloudera.hive.jdbc</groupId>

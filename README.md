@@ -32,11 +32,21 @@ mvn install
 
 ## 4，引入自己的项目
 ```xml
- <dependency>
-    <groupId>xiananliu</groupId>
-    <artifactId>liquibase-ext-hive2</artifactId>
-    <version>1.0.0</version>
-</dependency>
+    <dependency>
+        <groupId>org.liquibase</groupId>
+        <artifactId>liquibase-core</artifactId>
+        <version>4.8.0</version>
+    </dependency>
+    <dependency>
+        <groupId>com.cloudera.hive.jdbc</groupId>
+        <artifactId>HiveJDBC41</artifactId>
+        <version>2.6.21</version>
+    </dependency>
+    <dependency>
+        <groupId>xiananliu</groupId>
+        <artifactId>liquibase-ext-hive2</artifactId>
+        <version>1.0.0</version>
+    </dependency>
 ```
 
 
