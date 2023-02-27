@@ -1,0 +1,17 @@
+liquibase.ext.metastore.hive.sqlgenerator.HiveDropColumnGenerator
+liquibase.ext.metastore.hive.sqlgenerator.HiveInitializeDatabaseChangeLogLockTableGenerator
+liquibase.ext.metastore.hive.sqlgenerator.HiveInsertGenerator
+liquibase.ext.metastore.hive.sqlgenerator.HiveLockDatabaseChangeLogGenerator
+liquibase.ext.metastore.hive.sqlgenerator.HiveMarkChangeSetRanGenerator
+liquibase.ext.metastore.hive.sqlgenerator.HiveRemoveChangeSetRanStatusGenerator
+liquibase.ext.metastore.hive.sqlgenerator.HiveTagDatabaseGenerator
+liquibase.ext.metastore.hive.sqlgenerator.HiveUnlockDatabaseChangeLogGenerator
+
+liquibase.ext.metastore.sqlgenerator.CreateTableAsSelectGenerator
+liquibase.ext.metastore.sqlgenerator.InsertAsSelectGenerator
+liquibase.ext.metastore.sqlgenerator.MetastoreAddColumnGenerator
+liquibase.ext.metastore.sqlgenerator.MetastoreCreateDatabaseChangeLogLockTableGenerator
+liquibase.ext.metastore.sqlgenerator.MetastoreCreateDatabaseChangeLogTableGenerator
+liquibase.ext.metastore.sqlgenerator.RenameTableGenerator
+liquibase.ext.metastore.sqlgenerator.SetGenerator
+liquibase.ext.metastore.sqlgenerator.TruncateGenerator
