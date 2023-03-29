@@ -204,7 +204,7 @@ public class HiveStandardChangeLogHistoryService extends AbstractChangeLogHistor
 
     public String concat(String field) {
         String databaseChangeLogTableName = getDatabase().escapeObjectName(getDatabaseChangeLogTableName(), Table.class);
-        return databaseChangeLogTableName + "." + field;
+        return databaseChangeLogTableName.toUpperCase() + "." + field;
     }
 
     @Override
