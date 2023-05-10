@@ -1,4 +1,4 @@
-package liquibase.ext.metastore.hive.sqlgenerator;
+package liquibase.ext.metastore.sqlgenerator;
 
 import liquibase.database.Database;
 import liquibase.datatype.DataTypeFactory;
