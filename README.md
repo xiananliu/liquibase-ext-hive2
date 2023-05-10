@@ -11,7 +11,7 @@ cloudera hive驱动不在中央仓库，需要自行下载
 
 
 ## 1，下载 HiveJDBC41.jar  :
-    https://www.cloudera.com/downloads/connectors/impala/jdbc/2-6-4.html
+    https://www.cloudera.com/downloads/connectors/hive/jdbc/2-6-21.html
     
 ## 2， 安装HiveJDBC41.jar 到 本地 maven 仓库：
 
