@@ -15,3 +15,6 @@ liquibase.ext.metastore.sqlgenerator.MetastoreCreateDatabaseChangeLogTableGenera
 liquibase.ext.metastore.sqlgenerator.RenameTableGenerator
 liquibase.ext.metastore.sqlgenerator.SetGenerator
 liquibase.ext.metastore.sqlgenerator.TruncateGenerator
+
+liquibase.ext.metastore.sqlgenerator.MetastoreModifyDataTypeGenerator
+liquibase.ext.metastore.sqlgenerator.MetastoreRenameColumnGenerator
