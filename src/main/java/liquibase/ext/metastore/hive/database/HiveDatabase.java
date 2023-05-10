@@ -3,6 +3,8 @@ package liquibase.ext.metastore.hive.database;
 import liquibase.ext.metastore.database.HiveMetastoreDatabase;
 
 import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class HiveDatabase extends HiveMetastoreDatabase {
 
@@ -43,9 +45,15 @@ public class HiveDatabase extends HiveMetastoreDatabase {
 
     @Override
     protected String getConnectionSchemaName() {
-        String tokens[] = super.getConnection().getURL().split("\\/");
-        String dbName = tokens[tokens.length - 1].split(";")[0];
-        String schema = getSchemaDatabaseSpecific("SHOW SCHEMAS LIKE '" + dbName + "'");
-        return schema == null ? "default" : schema;
+        return getSchemaFromJdbcUrl(super.getConnection().getURL());
+    }
+
+    public static String getSchemaFromJdbcUrl(String jdbcUrl) {
+        Pattern pattern = Pattern.compile("jdbc:\\w+://[^/]+(?:/([^;\\?]+))?", Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(jdbcUrl);
+        if (matcher.find()) {
+            return matcher.group(1) == null ? "default" : matcher.group(1);
+        }
+        return "default";
     }
 }

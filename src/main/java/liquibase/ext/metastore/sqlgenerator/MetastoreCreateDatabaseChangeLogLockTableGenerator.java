@@ -31,6 +31,6 @@ public class MetastoreCreateDatabaseChangeLogLockTableGenerator extends CreateDa
                 .addColumn("LOCKGRANTED", DataTypeFactory.getInstance().fromDescription("TIMESTAMP", database))
                 .addColumn("LOCKEDBY", DataTypeFactory.getInstance().fromDescription("STRING", database));
 
-        return CustomSqlGenerator.generateSql(database, UserSessionSettings.syncDdlStart(), createTableStatement, UserSessionSettings.syncDdlStop());
+        return CustomSqlGenerator.generateSql(database, createTableStatement);
     }
 }
