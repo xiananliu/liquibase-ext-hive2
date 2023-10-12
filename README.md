@@ -2,7 +2,8 @@
 liquibase 的 hive2 扩展
 
 基于 https://github.com/eselyavka/liquibase-impala 改造适配而来
-适配liquibase 4.x，验证过4.8，其他版本请自行验证。
+ 适配 liquibase 4.x，验证过4.8，其他版本请自行验证。
+ 适配 hive 2.x~hive 3.1.x
 
 cloudera hive驱动不在中央仓库，需要自行下载 
 
