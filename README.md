@@ -26,12 +26,16 @@ cloudera hive驱动不在中央仓库，需要自行下载
 ``` shell
 mvn install:install-file -Dfile=HiveJDBC41.jar -DgroupId=com.cloudera.hive.jdbc -DartifactId=HiveJDBC41 -Dversion=2.6.21 -Dpackaging=jar
 ```
-## 3，clone 本项目并 install
-```shell
-mvn install
+## 3，添加本项目依赖
+```xml
+<dependency>
+  <groupId>io.github.xiananliu</groupId>
+  <artifactId>liquibase-ext-hive2</artifactId>
+  <version>1.0</version>
+</dependency>
 ```
 
-## 4，引入自己的项目
+## 4，全部依赖如下
 ```xml
     <dependency>
         <groupId>org.liquibase</groupId>
