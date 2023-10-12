@@ -1,3 +1,4 @@
+#不需要兼容，只需要使用changeSet 中的Type 类型即可，这里全部注释掉
 #liquibase.ext.metastore.datatype.MetastoreBigIntType
 #liquibase.ext.metastore.datatype.MetastoreBinaryType
 #liquibase.ext.metastore.datatype.MetastoreCharType

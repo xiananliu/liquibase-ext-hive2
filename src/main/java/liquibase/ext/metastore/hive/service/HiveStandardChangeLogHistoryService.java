@@ -202,7 +202,12 @@ public class HiveStandardChangeLogHistoryService extends AbstractChangeLogHistor
         getDatabase().commit();
     }
 
-    public String concat(String field) {
+    public String concat1(String field) {
+        String databaseChangeLogTableName = getDatabase().escapeObjectName(getDatabaseChangeLogTableName(), Table.class);
+        return databaseChangeLogTableName + "." + field;
+    }
+
+    public String concat2(String field) {
         String databaseChangeLogTableName = getDatabase().escapeObjectName(getDatabaseChangeLogTableName(), Table.class);
         return databaseChangeLogTableName.toUpperCase() + "." + field;
     }
@@ -216,14 +221,16 @@ public class HiveStandardChangeLogHistoryService extends AbstractChangeLogHistor
             if (hasDatabaseChangeLogTable()) {
                 LOG.info("Reading from " + databaseChangeLogTableName);
                 List<Map<String, ?>> results = queryDatabaseChangeLogTable(database);
+
                 for (Map rs : results) {
-                    String fileName = rs.get(concat("FILENAME")).toString();
-                    String author = rs.get(concat("AUTHOR")).toString();
-                    String id = rs.get(concat("ID")).toString();
-                    String md5sum = rs.get(concat("MD5SUM")) == null || !databaseChecksumsCompatible ? null : rs.get(concat("MD5SUM")).toString();
-                    String description = rs.get(concat("DESCRIPTION")) == null ? null : rs.get(concat("DESCRIPTION")).toString();
-                    String comments = rs.get(concat("COMMENTS")) == null ? null : rs.get(concat("COMMENTS")).toString();
-                    Object tmpDateExecuted = rs.get(concat("DATEEXECUTED"));
+                    LOG.info("Reading RanChangeSets:" + rs);
+                    String fileName = reGet(rs,"FILENAME").toString();
+                    String author = reGet(rs,"AUTHOR").toString();
+                    String id = reGet(rs,"ID").toString();
+                    String md5sum = reGet(rs,"MD5SUM") == null || !databaseChecksumsCompatible ? null : reGet(rs,"MD5SUM").toString();
+                    String description = reGet(rs,"DESCRIPTION") == null ? null : reGet(rs,"DESCRIPTION").toString();
+                    String comments = reGet(rs,"COMMENTS") == null ? null : reGet(rs,"COMMENTS").toString();
+                    Object tmpDateExecuted = reGet(rs,"DATEEXECUTED");
                     Date dateExecuted = null;
                     if (tmpDateExecuted instanceof Date) {
                         dateExecuted = (Date) tmpDateExecuted;
@@ -234,13 +241,13 @@ public class HiveStandardChangeLogHistoryService extends AbstractChangeLogHistor
                         } catch (ParseException e) {
                         }
                     }
-                    String tmpOrderExecuted = rs.get(concat("ORDEREXECUTED")).toString();
+                    String tmpOrderExecuted = reGet(rs,"ORDEREXECUTED").toString();
                     Integer orderExecuted = (tmpOrderExecuted == null ? null : Integer.valueOf(tmpOrderExecuted));
-                    String tag = rs.get(concat("TAG")) == null ? null : rs.get(concat("TAG")).toString();
-                    String execType = rs.get(concat("EXECTYPE")) == null ? null : rs.get(concat("EXECTYPE")).toString();
-                    ContextExpression contexts = new ContextExpression((String) rs.get(concat("CONTEXTS")));
-                    Labels labels = new Labels((String) rs.get(concat("LABELS")));
-                    String deploymentId = (String) rs.get(concat("DEPLOYMENT_ID"));
+                    String tag = reGet(rs,"TAG") == null ? null : reGet(rs,"TAG").toString();
+                    String execType = reGet(rs,"EXECTYPE") == null ? null : reGet(rs,"EXECTYPE").toString();
+                    ContextExpression contexts = new ContextExpression((String) reGet(rs,"CONTEXTS"));
+                    Labels labels = new Labels((String) reGet(rs,"LABELS"));
+                    String deploymentId = (String) reGet(rs,"DEPLOYMENT_ID");
 
                     try {
                         RanChangeSet ranChangeSet = new RanChangeSet(fileName, id, author, CheckSum.parse(md5sum), dateExecuted, tag, ChangeSet.ExecType.valueOf(execType), description, comments, contexts, labels, deploymentId);
@@ -258,9 +265,24 @@ public class HiveStandardChangeLogHistoryService extends AbstractChangeLogHistor
         return Collections.unmodifiableList(ranChangeSetList);
     }
 
+    private Object reGet(Map<Object,Object> rs,String field){
+        if (rs.get(field)!=null){
+            return rs.get(field);
+        }
+
+        if (rs.get(concat1(field))!=null){
+            return rs.get(concat1(field));
+        }
+
+        if (rs.get(concat2(field))!=null){
+            return rs.get(concat2(field));
+        }
+        return null;
+    }
+
     private List<Map<String, ?>> queryDatabaseChangeLogTable(Database database) throws DatabaseException {
         SelectFromDatabaseChangeLogStatement select = new SelectFromDatabaseChangeLogStatement(new ColumnConfig().setName("*").setComputed(true)).setOrderBy("DATEEXECUTED ASC", "ORDEREXECUTED ASC");
-        return Scope.getCurrentScope().getSingleton(ExecutorService.class).getExecutor(database).queryForList(select);
+        return Scope.getCurrentScope().getSingleton(ExecutorService.class).getExecutor("jdbc",database).queryForList(select);
     }
 
     @Override

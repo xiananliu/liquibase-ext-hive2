@@ -76,12 +76,12 @@ public class MetastoreLockService extends StandardLockService {
 
             Executor executor = Scope.getCurrentScope().getSingleton(ExecutorService.class).getExecutor(database);
             try {
-                if (this.hasDatabaseChangeLogLockTable()) {
+//                if (this.hasDatabaseChangeLogLockTable()) {
                     executor.comment("Release hive metastore database lock");
                     database.rollback();
                     executor.execute(new UnlockDatabaseChangeLogStatement());
                     database.commit();
-                }
+//                }
             } catch (Exception e) {
                 throw new LockException(e);
             } finally {

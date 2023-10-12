@@ -44,6 +44,6 @@ public class MetastoreCreateDatabaseChangeLogTableGenerator extends CreateDataba
                 .addColumn("LABELS", DataTypeFactory.getInstance().fromDescription(TypeNameChar, database))
                 .addColumn("DEPLOYMENT_ID", DataTypeFactory.getInstance().fromDescription(TypeNameChar, database));
 
-        return CustomSqlGenerator.generateSql(database, UserSessionSettings.syncDdlStart(), createTableStatement, UserSessionSettings.syncDdlStop());
+        return CustomSqlGenerator.generateSql(database, createTableStatement);
     }
 }

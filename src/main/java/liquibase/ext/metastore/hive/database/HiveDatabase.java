@@ -35,7 +35,7 @@ public class HiveDatabase extends HiveMetastoreDatabase {
                 "UNIQUEJOIN", "UPDATE", "USER", "USING", "UTC_TMESTAMP", "VALUES", "VARCHAR", "WHEN",
                 "WHERE", "WINDOW", "WITH", "COMMIT", "ONLY", "REGEXP", "RLIKE", "ROLLBACK", "START",
                 "CACHE", "CONSTRAINT", "FOREIGN", "PRIMARY", "REFERENCES", "DAYOFWEEK", "EXTRACT",
-                "FLOOR", "INTEGER", "PRECISION", "VIEWS"));
+                "FLOOR", "INTEGER", "PRECISION", "VIEWS","TIME"));
     }
 
     @Override
@@ -45,11 +45,15 @@ public class HiveDatabase extends HiveMetastoreDatabase {
 
     @Override
     protected String getConnectionSchemaName() {
+//        String tokens[] = super.getConnection().getURL().split("\\/");
+//        String dbName = tokens[tokens.length - 1].split(";")[0];
+//        String schema = getSchemaDatabaseSpecific("SHOW SCHEMAS LIKE '" + dbName + "'");
+//        return schema == null ? "default" : schema;
         return getSchemaFromJdbcUrl(super.getConnection().getURL());
     }
 
     public static String getSchemaFromJdbcUrl(String jdbcUrl) {
-        Pattern pattern = Pattern.compile("jdbc:\\w+://[^/]+(?:/([^;\\?]+))?", Pattern.CASE_INSENSITIVE);
+        Pattern pattern = Pattern.compile("jdbc:hive2://[^/]+(?:/([^;\\?]+))?", Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(jdbcUrl);
         if (matcher.find()) {
             return matcher.group(1) == null ? "default" : matcher.group(1);
